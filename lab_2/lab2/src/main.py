@@ -12,15 +12,24 @@ import joblib
 
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "model_pipeline.pkl")
 
-app = FastAPI()
-
-
-
 
 # define pydantic models for input and output
-class HousingDataInput(BaseModel):
-    data: List[List[float]]
+ #Define input data model
+class BlockGroup(BaseModel):
+    MedInc: float
+    HouseAge: float
+    AveRooms: float
+    AveBedrms: float
+    Population: int
+    AveOccup: float
+    Latitude: float
+    Longitude: float
 
+# Define input data list model
+class HousingDataInputList(BaseModel):
+    data: List[BlockGroup]
+
+# Define output data model
 class HousingDataOutput(BaseModel):
     predictions: List[List[float]] = []
 
@@ -31,11 +40,11 @@ model = joblib.load(MODEL_PATH)
 end = datetime.now()
 print(f"time to load model: {end-start}")
 
-
+app = FastAPI()
 
 @app.post("/predict", response_model=HousingDataOutput)
-def predict(data: HousingDataInput):
-    x = np.array(data.data)
+def predict(data: HousingDataInputList):
+    x = np.array([[bg.MedInc, bg.HouseAge, bg.AveRooms, bg.AveBedrms, bg.Population, bg.AveOccup, bg.Latitude, bg.Longitude] for bg in data.data])
     if x.size == 0:
         print("Input data should not be empty")
         return HousingDataOutput(predictions=[])
@@ -50,7 +59,6 @@ def predict(data: HousingDataInput):
         return HousingDataOutput(predictions=[])
 
     return HousingDataOutput(predictions=predictions_output)
-
 
 
 # define the health check endpoint

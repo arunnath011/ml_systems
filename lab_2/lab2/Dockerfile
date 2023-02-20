@@ -1,48 +1,36 @@
-# Base Arguements to leverage across build stages
-ARG APP_DIR=/app
+From python:3.10-slim as build
 
-#############
-# Build (Prepare Environment) image
-#############
-FROM python:3.10-slim AS build
-ARG APP_DIR
-
-# Install curl so we can get poetry
-# install build-base and libffi-dev so we can install poetry and dependencies (compiles some code)
 RUN apt-get update \
     && apt-get install -y \
-         curl \
-         build-essential \
-         libffi-dev \
+        curl\
+        build-essential \
+        libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# install poetry and add to path
-ENV POETRY_VERSION=1.3.2
-RUN curl -sSL https://install.python-poetry.org | python -
-ENV PATH /root/.local/bin:$PATH
 
-# change work directory for where our app will live
-WORKDIR ${APP_DIR}
-COPY pyproject.toml poetry.lock ./
+ENV POETRY VERSION=1.3.2
+RUN curl -sSL https://install.python-poetry.org | python3 -
+ENV PATH/root/.local/bin:$PATH
 
-# Copy over the venv including any symbolic links, do not install development/testing libraries when install poetry dependencies
-RUN python -m venv --copies ${APP_DIR}/venv
-RUN . ${APP_DIR}/venv/bin/activate && poetry install --no-dev
+COPY poetry.lock pyproject.toml ./
+RUN python -m venv --copies ./venv
+RUN . ./venv/bin/activate && poetry install --only main
 
+From python:3.10-slim as run
 
+RUN apt-get update \
+    && apt-get install -y \
+        curl\
+        build-essential \
+        libffi-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-#############
-# Deployment image
-#############
-FROM python:3.10-slim as run
-ARG APP_DIR
+COPY --from=build/venv/venv
+ENV PATH /venv/bin:$PATH
 
-COPY --from=build ${APP_DIR}/venv ${APP_DIR}/venv/
-ENV PATH ${APP_DIR}/venv/bin:$PATH
+COPY ../
 
-WORKDIR ${APP_DIR}/
-COPY  . ./
+HEALTHCHECK --start-period=15s --interval=15s --timeout=3s --retries=5\
+    CMD curl -f http://localhost:8000/health || exit 1
 
-HEALTHCHECK --start-period=30s CMD python -c "import requests; requests.get('http://localhost:8000/health', timeout=2)"
-
-CMD ["uvicorn", "lab2.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn" ,"src.main:app","--host","0.0.0.0","--port","8000"]
