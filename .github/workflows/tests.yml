@@ -17,7 +17,7 @@ jobs:
           python -m pip install --upgrade pip
           curl -sSL https://install.python-poetry.org | python -
           poetry install
-        working-directory: ./lab_2/lab2
+
       - name: Run Pytest
         run: poetry run pytest .
-        working-directory: ./lab_2/lab2
+       
