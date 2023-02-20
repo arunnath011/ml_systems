@@ -1,29 +1,23 @@
 name: github_testing_actions
-run-name: ${{ github.actor}} is learning Github Actions
-on: [push]
-
+on:
+  push:
+    branches:
+      - main
 jobs:
   lab2-tests:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-      uses: actions/setup-python@v4
-
-      with:
-        python-version: 3.10
-
-    - name: Setting up Virtual Environment
-      run:  |
-        python3 -m pip install --upgrade pip
-        curl -sSL https://install.python-poetry.org | python3 -
-    - name: Set up Poetry
-      working-directory: ./lab_2/la2
-      run: |
-        pwd
-        poetry --version
-        poetry install
-      name: Test with PyTest
-    - working-directory:  ./lab_2/lab2
-      run: poetry run pytest
-
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          curl -sSL https://install.python-poetry.org | python -
+          poetry install
+        working-directory: ./lab_2/lab2
+      - name: Run Pytest
+        run: poetry run pytest .
+        working-directory: ./lab_2/lab2
