@@ -1,4 +1,4 @@
-From python:3.10-slim as build
+FROM python:3.10-slim as build
 
 RUN apt-get update \
     && apt-get install -y \
@@ -8,15 +8,16 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 
-ENV POETRY VERSION=1.3.2
+ENV POETRY_VERSION=1.3.2
 RUN curl -sSL https://install.python-poetry.org | python3 -
-ENV PATH/root/.local/bin:$PATH
+ENV PATH /root/.local/bin:$PATH
 
+WORKDIR /app
 COPY poetry.lock pyproject.toml ./
 RUN python -m venv --copies ./venv
 RUN . ./venv/bin/activate && poetry install --only main
 
-From python:3.10-slim as run
+FROM python:3.10-slim as run
 
 RUN apt-get update \
     && apt-get install -y \
@@ -25,12 +26,10 @@ RUN apt-get update \
         libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=build/venv/venv
-ENV PATH /venv/bin:$PATH
+WORKDIR /app
+COPY --from=build /app .
 
-COPY ../
-
-HEALTHCHECK --start-period=15s --interval=15s --timeout=3s --retries=5\
+HEALTHCHECK --start-period=15s --interval=15s --timeout=3s --retries=5 \
     CMD curl -f http://localhost:8000/health || exit 1
 
 CMD ["uvicorn" ,"src.main:app","--host","0.0.0.0","--port","8000"]
