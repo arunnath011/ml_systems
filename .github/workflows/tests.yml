@@ -24,5 +24,7 @@ jobs:
           poetry install
 
       - name: Pytest
-        working-directory: ./tests
-        run: poetry run pytest
+        working-directory: ./lab_2/lab2
+        run: |
+          pwd
+          poetry run pytest tests
