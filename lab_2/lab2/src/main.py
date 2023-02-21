@@ -9,6 +9,9 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import joblib
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse
 
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "model_pipeline.pkl")
 
@@ -42,6 +45,17 @@ print(f"time to load model: {end-start}")
 
 app = FastAPI()
 
+@app.get("/")
+async def root():
+    raise HTTPException(status_code=501, detail="Not Implemented")
+
+@app.get("/hello")
+async def hello(name: str = None):
+    if name is None:
+        raise HTTPException(status_code=400, detail="Name not specified")
+    return {"message": f"Hello {name}"}
+
+
 @app.post("/predict", response_model=HousingDataOutput)
 def predict(data: HousingDataInputList):
     x = np.array([[bg.MedInc, bg.HouseAge, bg.AveRooms, bg.AveBedrms, bg.Population, bg.AveOccup, bg.Latitude, bg.Longitude] for bg in data.data])
@@ -51,6 +65,9 @@ def predict(data: HousingDataInputList):
     if x.ndim != 2 or x.shape[1] != 8:
         print("Input data should have 8 columns")
         return
+
+    if (x[:, 4] <= 0).any():
+        raise HTTPException(status_code=422, detail="Population value should be greater than 0")
     try:
         predictions = model.predict(x)
         predictions_output = [[pred] for pred in predictions]
