@@ -7,18 +7,22 @@ jobs:
   lab2-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      - name: Install dependencies
+      - name: setting up virtual environment
+        run: |
+          python3 -m pip install --upgrade pip
+          curl -sSL https://install.python-poetry.org | python3 -
+      - name: set up poetry
         working-directory: ./lab_2/lab2
         run: |
-          python -m pip install --upgrade pip
-          curl -sSL https://install.python-poetry.org | python -
+          pwd
+          poetry --version
           poetry install
 
-      - name: Run Pytest
+      - name: Pytest
         working-directory: ./lab_2/lab2
-        run: poetry run pytest tests
+        run: poetry run pytest
