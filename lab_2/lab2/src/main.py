@@ -65,7 +65,6 @@ def predict(data: HousingDataInputList):
     if x.ndim != 2 or x.shape[1] != 8:
         print("Input data should have 8 columns")
         return
-
     if (x[:, 4] <= 0).any():
         raise HTTPException(status_code=422, detail="Population value should be greater than 0")
     try:

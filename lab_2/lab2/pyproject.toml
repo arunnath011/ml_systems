@@ -3,8 +3,7 @@ name = "lab-2"
 version = "0.1.0"
 description = ""
 authors = ["reynard011 <53822804+reynard011@users.noreply.github.com>"]
-readme = "README.md"
-packages = [{include = "lab_2"}]
+
 
 [tool.poetry.dependencies]
 python = ">=3.10.0,<3.12"
