@@ -12,13 +12,14 @@ import joblib
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.responses import JSONResponse
+from sklearn.impute import SimpleImputer
 
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "model_pipeline.pkl")
 
 
 # define pydantic models for input and output
  #Define input data model
-class BlockGroup(BaseModel):
+class InputModel(BaseModel):
     MedInc: float
     HouseAge: float
     AveRooms: float
@@ -28,14 +29,12 @@ class BlockGroup(BaseModel):
     Latitude: float
     Longitude: float
 
-# Define input data list model
-class HousingDataInputList(BaseModel):
-    data: List[BlockGroup]
+
 
 
 # Define output data model
 class HousingDataOutput(BaseModel):
-    predictions: List[List[float]] = []
+    predictions: List[float]
 
 
 # load the pre-trained model
@@ -57,25 +56,18 @@ async def hello(name: str = None):
     return {"message": f"Hello {name}"}
 
 
-@app.post("/predict", response_model=HousingDataOutput)
-def predict(data: HousingDataInputList):
-    x = np.array([[bg.MedInc, bg.HouseAge, bg.AveRooms, bg.AveBedrms, bg.Population, bg.AveOccup, bg.Latitude, bg.Longitude] for bg in data.data])
-    if x.size == 0:
-        print("Input data should not be empty")
-        return HousingDataOutput(predictions=[])
-    if x.ndim != 2 or x.shape[1] != 8:
-        print("Input data should have 8 columns")
-        return
-    if (x[:, 4] <= 0).any():
-        raise HTTPException(status_code=422, detail="Population value should be greater than 0")
-    try:
-        predictions = model.predict(x)
-        predictions_output = [[pred] for pred in predictions]
-    except:
-        print("Invalid input data")
-        return HousingDataOutput(predictions=[])
 
-    return HousingDataOutput(predictions=predictions_output)
+@app.post("/predict")
+def predict(input: InputModel):
+    input_dict = input.dict()
+    input_vector = np.array([input_dict[key] for key in input_dict])
+    input_vector = np.reshape(input_vector, (1, -1))
+    imputer = SimpleImputer()
+    X_imputed = imputer.fit_transform(input_vector)
+    prediction = model.predict(X_imputed)
+    prediction_output = HousingDataOutput(predictions=[float(prediction)])
+    return prediction_output
+
 
 
 # define the health check endpoint
