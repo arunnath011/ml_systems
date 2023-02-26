@@ -66,7 +66,7 @@ environments.
 
 3.) What advantages do multi-stage docker builds give us?
 
-Ans- Multistage docker does offer  significant advandates
+Ans- Multistage docker does offer  significant advantages
 
 Reduced Image Size: Multi-stage builds allow us to separate the build 
 environment from the runtime environment, meaning that we only include 
