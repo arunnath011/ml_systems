@@ -1,6 +1,6 @@
 name: github_testing_actions_lab2
 on:
-  pull_reqests:
+  pull_requests:
     branches:
       - main
 jobs:
