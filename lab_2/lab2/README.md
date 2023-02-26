@@ -66,14 +66,17 @@ NOTE:
 Question & Answer:
 
 1.)What does Pydantic handle for us? 
-Pydantic is a Python library that handles data validation and settings management. It provides runtime checking and validation of data types, data conversion, and automatic documentation generation for data models. It also supports default values for fields, handles nested data structures, and improves the overall data validation process.
+
+-Pydantic is a Python library that handles data validation and settings management. It provides runtime checking and validation of data types, data conversion, and automatic documentation generation for data models. It also supports default values for fields, handles nested data structures, and improves the overall data validation process.
 
 2.)What do GitHub Actions do?
-GitHub Actions is a powerful continuous integration and continuous deployment (CI/CD) tool provided by GitHub. It allows developers to automate their workflows and software development processes with customizable workflows that run in response to events like code commits, pull requests, issues, and more.
+
+-GitHub Actions is a powerful continuous integration and continuous deployment (CI/CD) tool provided by GitHub. It allows developers to automate their workflows and software development processes with customizable workflows that run in response to events like code commits, pull requests, issues, and more.
 By using GitHub Actions, developers can automate many repetitive tasks and reduce the chance of errors, saving time and increasing productivity. It also makes it easier to collaborate on projects, as contributors can easily see the state of the code and the tests that have been run. Additionally, GitHub Actions provides a marketplace of pre-built workflows that developers can easily plug into their own projects to automate common tasks, such as deploying to cloud providers or running tests.
 
 3.)In 2-3 sentences (plain language), describe what the Sequence Diagram below shows.
-This is a sequence diagram showing the flow of data in a basic machine learning application, including the user (U), API (A), and model (M).
+
+-This is a sequence diagram showing the flow of data in a basic machine learning application, including the user (U), API (A), and model (M).
 The flow starts with the user sending a POST request with a JSON payload to the API. If the input payload does not satisfy the pydantic schema, an error is returned to the user. If the input is valid, the API sends the input values to the model.
 The model processes the input values and returns the output values to the API, which stores the returned values. Finally, the API returns the values as an output data model to the user.
 Overall, this diagram shows a simple data flow in a machine learning application, where the API acts as an interface between the user and the model.
