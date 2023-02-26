@@ -1,3 +1,4 @@
+#importing all the necessary packages
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
@@ -13,8 +14,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.responses import JSONResponse
 
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "model_pipeline.pkl")
-
+#setting the path of the model_pipline.pkl file
+MODEL_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..',  'model_pipeline.pkl'))
 
 # define pydantic models for input and output
  #Define input data model

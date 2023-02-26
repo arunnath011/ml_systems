@@ -59,6 +59,10 @@ curl -o /dev/null -s -w "%{http_code}\n" -X GET "http://localhost:8000/openapi.j
 echo "Testing '/predict' endpoint."
 curl -o /dev/null -s -w "%{http_code}\n" -X POST "http://localhost:8000/predict" -H "accept: application/json" -H "Content-Type: application/json" -d '{"data": [{"MedInc": 8.3252, "HouseAge": 41.0, "AveRooms": 6.98412698, "AveBedrms": 1.02380952, "Population": 322, "AveOccup": 2.55555556, "Latitude": 37.88, "Longitude": -122.23}]}'
 
+echo "Testing '/health' endpoint."
+curl -o /dev/null -s -w "%{http_code}\n" -X GET "http://localhost:8000/health"
+
+
 # Stop and remove the Docker container
 docker stop lab2app
 docker rm lab2app
