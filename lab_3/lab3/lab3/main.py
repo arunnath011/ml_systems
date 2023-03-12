@@ -41,10 +41,10 @@ class HousingDataOutput(BaseModel):
 
 
 
-# create a Redis client
-redis_client = redis.Redis(host='localhost', port=6379, db=0)
+# create a Redis client this for running locally
+#redis_client = redis.Redis(host='localhost', port=6379, db=0)
 #for running redis on docker
-#redis_client = redis.Redis(host='redis', port=6379, db=0)
+redis_client = redis.Redis(host='redis', port=6379, db=0)
 
 
 # load the pre-trained model

@@ -16,7 +16,7 @@ ENV PATH /root/.local/bin:$PATH
 COPY poetry.lock pyproject.toml ./
 RUN python -m venv --copies ./venv
 RUN . ./venv/bin/activate && poetry install --only main
-RUN poetry install --only main hiredis redis
+
 
 FROM python:3.10-slim as run
 
@@ -36,4 +36,10 @@ COPY . ./
 HEALTHCHECK --start-period=15s --interval=15s --timeout=3s --retries=5 \
     CMD curl -f http://localhost:8000/health || exit 1
 
-CMD ["uvicorn" ,"lab3.main:app","--host","0.0.0.0","--port","8000", "--env", "REDIS_HOST=redis", "--env", "REDIS_PORT=6379"]
+
+ENTRYPOINT ["uvicorn", "lab3.main:app", "--host", "0.0.0.0", "--port", "8000"]
+ENV REDIS_HOST=redis
+ENV REDIS_PORT=6379
+
+
+
