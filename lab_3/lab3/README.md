@@ -25,3 +25,17 @@ MONITOR
 
 6.) to run the uvicorn run the command
 uvicorn main:app --host 0.0.0.0 --port 8000
+
+Running Docker, first run the redis and then the lab3 
+
+
+image used for the yaml file for lab3 was downloaded form dockerhub
+image: arunnath011/lab3 (i had lot of issues with setting up local registry, found out my firewall was preventing it so used this method
+kubernetes:
+#commands
+minikube start
+kubectl create namespace w255lab3
+kubectl apply -f infra/ --namespace w255lab3
+kubectl get namespaces
+kubectl get deployments -n w255lab3
+kubectl get services -n w255lab3

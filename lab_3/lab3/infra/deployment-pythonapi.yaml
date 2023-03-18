@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: pythonapi
-  namespace: w255_lab3
+  namespace: w255lab3
 spec:
   selector:
     matchLabels:
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: pythonapi
-          image: lab3
+          image: arunnath011/lab3
           ports:
             - containerPort: 8000
           env:
@@ -36,11 +36,13 @@ spec:
               mountPath: /app/data
       initContainers:
         - name: init-wait-for-redis
-          image: busybox
+          image: busybox:1.28.4
           command: ['sh', '-c', 'until nslookup redis; do echo waiting for redis; sleep 2; done;']
         - name: init-ping
-          image: busybox
+          image: busybox:1.28.4
           command: ['sh', '-c', 'until echo PING | nc -w 1 redis 6379 | grep PONG; do echo waiting for redis; sleep 2; done;']
+
+      terminationGracePeriodSeconds: 60
       volumes:
         - name: data
           emptyDir: {}
