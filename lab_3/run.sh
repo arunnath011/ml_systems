@@ -1,12 +1,15 @@
 #!/bin/bash
 
 # Start minikube
+echo "starting Minikube..."
 minikube start
 
 # Set Docker daemon to use Minikube
+echo "Setting Docker deamon to use in Minikube..."
 eval $(minikube docker-env)
 
 # Ensure API model is trained & Check if the model pipeline file exists
+echo "Checking if API trained model exits...."
 model_file=./lab3/model_pipeline.pkl
 
 echo "Checking if model file already exists..."
@@ -36,11 +39,13 @@ else
 fi
 
 # Build Docker container
+echo "Docker container build..."
 docker build --no-cache -t lab3 ./lab3
 
 sleep 5
 
 # Apply namespace
+echo "starting Kubernetes..."
 kubectl apply -f namespace.yaml
 
 # Apply deployments
@@ -51,14 +56,19 @@ kubectl apply -f service-redis.yaml
 kubectl apply -f service-prediction.yaml
 
 # Create minikube tunnel or port-forward local port
-# (replace <your-api-service-name> with the actual name of your API service)
+echo "starting Minikube tunnel..."
 minikube tunnel &
 TUNNEL_PID=$!
 
 #port forward-python api
+echo "port forward..."
 kubectl port-forward deployment/pythonapi 8000:8000 -n w255lab3
 
+sleep 5
+
+
 # Wait for API to be accessible
+echo "Waiting for API to be accessible..."
 until $(curl --output /dev/null --silent --head --fail http://localhost:8000/health); do
     printf '.'
     sleep 5
@@ -90,7 +100,11 @@ curl -o /dev/null -s -w "%{http_code}\n" -X GET "http://localhost:8000/health"
 
 
 # Clean up after yourself
+echo "Shutting down the Minikube Tunnel and deleting the k8s namespace..."
 kill $TUNNEL_PID
 kubectl delete all --all -n w255lab3
 kubectl delete namespace w255lab3
 minikube stop
+
+
+echo "Run done!!, time for coffee?..."
