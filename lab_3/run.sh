@@ -8,36 +8,6 @@ minikube start
 echo "Setting Docker deamon to use in Minikube..."
 eval $(minikube docker-env)
 
-# Ensure API model is trained & Check if the model pipeline file exists
-echo "Checking if API trained model exits...."
-model_file=./lab3/model_pipeline.pkl
-
-echo "Checking if model file already exists..."
-if [ ! -f "$model_file" ]; then
-  echo "Model file does not exist, will need to be created."
-
-  # Check if model file exists in trainer directory and delete it
-  model_file_check=./lab3/trainer/model_pipeline.pkl
-  if [ -f "$model_file_check" ]; then
-    echo "Model file found at $model_file_check. Deleting the file..."
-    rm $model_file_check
-    echo "$model_file_check deleted."
-  fi
-
-  # Train the model and move it to designated folder
-  echo "Training California Housing Data Model..."
-  cd lab3/trainer
-  poetry run python train.py
-  cd ..
-
-  echo "Moving the model file to designated folder."
-  cp trainer/model_pipeline.pkl $model_file
-  rm trainer/model_pipeline.pkl
-  echo "$model_file is created and moving to the next step."
-else
-  echo "Model file already exists. Skipping training step."
-fi
-
 # Build Docker container
 echo "Docker container build..."
 docker build --no-cache -t lab3 ./lab3

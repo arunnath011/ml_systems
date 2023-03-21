@@ -12,6 +12,31 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 client = TestClient(app)
 
+import redis
+
+redis_client = redis.Redis(host='localhost', port=6379)
+
+
+def test_predict_with_valid_data():
+    valid_data = {"data": [
+        {"MedInc": 8.3252, "HouseAge": 41.0, "AveRooms": 6.98412698, "AveBedrms": 1.02380952, "Population": 322,
+         "AveOccup": 2.55555556, "Latitude": 37.88, "Longitude": -122.23}]}
+    cache_key = json.dumps(valid_data)
+
+    # check if result is in Redis cache
+    if redis_client.exists(cache_key):
+        result = json.loads(redis_client.get(cache_key))
+        assert result['predictions'] is not None
+    else:
+        # execute the request and cache the result in Redis
+        response = client.post("/predict", json=valid_data)
+        assert response.status_code == 200
+        result = response.json()
+        redis_client.set(cache_key, json.dumps(result))
+
+    # check the result
+    assert result['predictions'] is not None
+
 
 def test_hello_endpoint():
     response = requests.get("http://localhost:8000/hello?name=test_user")
