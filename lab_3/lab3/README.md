@@ -114,7 +114,18 @@ curl -o /dev/null -s -w "%{http_code}\n" -X POST "http://localhost:8000/predict"
 # Testing '/health' endpoint.
 curl -o /dev/null -s -w "%{http_code}\n" -X GET "http://localhost:8000/health"
 
+# Killing the Kubernetes
 
+#killing the minikube tunnel
+kill $TUNNEL_PID
+
+#deleting the namespace
+kubectl delete all --all -n w255lab3
+
+kubectl delete namespace w255lab3
+
+# stopping minikube
+minikube stop
 
 
 # Answer the following questions:
