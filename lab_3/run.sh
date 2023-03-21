@@ -14,6 +14,8 @@ docker build --no-cache -t lab3 ./lab3
 
 sleep 5
 
+cd lab3/infra
+
 # Apply namespace
 echo "starting Kubernetes..."
 kubectl apply -f namespace.yaml
