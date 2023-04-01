@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: pythonapi
-  namespace: w255lab3
+  namespace: w255lab4
 spec:
   selector:
     matchLabels:
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: pythonapi
-          image: arunnath011/lab3
+          image: arunnath011/lab4
           ports:
             - containerPort: 8000
           env:

@@ -37,7 +37,7 @@ HEALTHCHECK --start-period=15s --interval=15s --timeout=3s --retries=5 \
     CMD curl -f http://localhost:8000/health || exit 1
 
 
-ENTRYPOINT ["uvicorn", "lab3.main:app", "--host", "0.0.0.0", "--port", "8000"]
+ENTRYPOINT ["uvicorn", "lab4.main:app", "--host", "0.0.0.0", "--port", "8000"]
 ENV REDIS_HOST=redis
 ENV REDIS_PORT=6379
 

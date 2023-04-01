@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis
-  namespace: w255lab3
+  namespace: w255lab4
 spec:
   replicas: 1
   selector:

@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis
-  namespace: w255lab3
+  namespace: w255lab4
 spec:
   selector:
     app: redis
