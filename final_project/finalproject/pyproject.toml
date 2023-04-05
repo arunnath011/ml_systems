@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "src"
+name = "final_project"
 version = "0.1.0"
 description = ""
 authors = ["Arun Surendranath <arun.nath011@berkeley.edu>"]
