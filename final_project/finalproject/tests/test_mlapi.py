@@ -3,8 +3,15 @@ from fastapi.testclient import TestClient
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.inmemory import InMemoryBackend
 from numpy.testing import assert_almost_equal
-from src import __version__
-from src.main import app
+# from src import __version__
+from ..finalproject.main import app ,model,SentimentRequest,Sentiment,SentimentResponse, BlockGroup
+import torch
+import json
+from pydantic import ValidationError
+import joblib
+import requests
+# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 
 
 @pytest.fixture

@@ -35,7 +35,7 @@ class Sentiment(BaseModel):
 
 class SentimentResponse(BaseModel):
     predictions: List[Sentiment]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+
 @app.post("/predict", response_model=SentimentResponse)
 def predict(sentiments: SentimentRequest):
     predictions = classifier(sentiments.text)

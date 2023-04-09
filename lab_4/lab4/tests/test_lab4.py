@@ -3,7 +3,7 @@ import sys
 import pytest
 import json
 from fastapi.testclient import TestClient
-from lab3.main import app, HousingDataInputList, model , HousingDataOutput,BlockGroup
+from lab4.main import app, HousingDataInputList, model , HousingDataOutput,BlockGroup
 from pydantic import ValidationError
 import joblib
 import requests
