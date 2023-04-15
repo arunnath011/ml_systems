@@ -5,6 +5,9 @@ RUN apt-get update \
         curl\
         build-essential \
         libffi-dev \
+        libblas-dev \
+        liblapack-dev \
+        gfortran \
     && rm -rf /var/lib/apt/lists/*
 
 
@@ -15,7 +18,9 @@ ENV PATH /root/.local/bin:$PATH
 
 COPY poetry.lock pyproject.toml ./
 RUN python -m venv --copies ./venv
+RUN . ./venv/bin/activate && pip3 install torch torchvision
 RUN . ./venv/bin/activate && poetry install --only main
+
 
 
 FROM python:3.10-slim as run
@@ -25,13 +30,17 @@ RUN apt-get update \
         curl\
         build-essential \
         libffi-dev \
+        libblas-dev \
+        liblapack-dev \
+        gfortran \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /venv /venv
 COPY --from=build /venv/lib/python3.10/site-packages/redis /venv/lib/python3.10/site-packages/redis
 ENV PATH /venv/bin:$PATH
 
-COPY . ./
+COPY finalproject ./finalproject
+COPY finalproject/distilbert-base-uncased-finetuned-sst2 /app/model
 
 HEALTHCHECK --start-period=15s --interval=15s --timeout=3s --retries=5 \
     CMD curl -f http://localhost:8000/health || exit 1
