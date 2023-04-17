@@ -2,25 +2,40 @@
 
 - [Lab 5 Findings - \[YOUR NAME\]](#lab-5-findings---arun-surendranath)
   - [Introduction](#introduction)
-  - [Findings](#findings)
-    - [Finding 1](#finding-1)
-    - [Finding 2](#finding-2)
-    - [Finding N](#finding-n)
+  - [Methods](#findings)
+    - [Cache Rate 0.0](#finding-1)
+    - [Cache Rate 0.5](#finding-2)
+    - [Cache Rate 1.0](#finding-n)
   - [Conclusion](#conclusion)
 
 ---
 
 ## Introduction
 
-[Some descriptive![](../../../Screenshot 2023-04-09 at 12.01.38 AM.png) text]
+[ Kubernetes has emerged as a leading container orchestration platform, enabling organizations to manage and scale their applications seamlessly. As more and more businesses rely on Kubernetes for their deployment needs, it is crucial to ensure the resilience, efficiency, and scalability of these systems. 
+One key aspect that impacts the performance of applications hosted on Kubernetes is the cache rate and the effectiveness of caching mechanisms like Redis. In this paper, we present a comprehensive experiment designed to evaluate the impact of varying cache rates on a predict endpoint application deployed on a Kubernetes cluster, 
+with a focus on service workloads and overall success rates under increasing load conditions.The primary objective of our study is to understand the relationship between cache rate and system performance for the predict endpoint application, which encompasses response times, resource utilization, and overall success rates. 
+To achieve this, we will deploy the predict endpoint application on a Kubernetes cluster, systematically varying the cache rate to observe the resulting changes in system behavior. Additionally, we will examine the performance of Redis as an integral part of our caching strategy, assessing its efficacy in maintaining high levels of system responsiveness and throughput for the predict endpoint application.
+Another critical aspect of our investigation is understanding the impact of increasing load on the Kubernetes cluster hosting the predict endpoint application. By subjecting our deployment to a range of load conditions, we aim to identify potential bottlenecks, resource constraints, and limitations that may hinder performance. 
+This analysis will enable us to make informed decisions on optimizing the cluster configuration and caching strategies, ensuring that our Kubernetes deployments remain performant and resilient even under heavy load.
+]
 
-## Findings
+## Methods
 
-[Some descriptive text]
+[ we present the methodology used for load testing a predict endpoint application deployed on a Kubernetes cluster, focusing on the impact of varying cache rates. Our aim is to assess the system's performance, response times, and overall success rate under different load conditions and cache rates, set at 0, 0.5, and 1.0.
+To achieve this, we have employed the k6 load testing tool, which provides an efficient way to simulate user traffic and analyze the system's behavior under various conditions. The k6 script provided above outlines the entire load testing process, which can be broken down into the following key components:
+1.)Options: The options object defines the load testing stages and thresholds. In this case, we simulate a ramp-up of traffic from 1 to 100 users over 1 minute, maintain 100 users for 5 minutes, and then ramp down to 0 users within 5 seconds. The threshold is set such that 99% of requests must complete within 500 ms.
+2.)Features and Fixed Data: The features array contains the feature names for the predict endpoint, while the fixed array holds a predetermined set of values for each feature. These arrays are used to generate input data for the load test, based on the specified cache rate.
+3.)Random Integer and Data Generator Functions: The randInt function generates a random integer within a given range, while the generator function creates input data for the predict endpoint based on the specified cache rate. If a random number is greater than the cache rate, the function generates random values for each feature; otherwise, it uses the fixed values.
+4.)Namespace and Base URL: The NAMESPACE and BASE_URL constants define the predict endpoint's URL, which is used to send requests during the load test.
+5.)Cache Rate: The CACHE_RATE constant defines the cache rate for the load test. It can be changed to 0, 0.5, or 1.0 to study the impact of different cache rates on the system's performance.
+6.)Load Test Function: The default function represents the main load testing logic. It sends an HTTP GET request to the /health endpoint, checking whether the status is 200 and the response is "healthy". Next, it generates input data based on the specified cache rate and sends an HTTP POST request to the /predict endpoint. It checks whether the response status is 200 and whether the prediction is a valid number.
+To execute the load test, the k6 script can be run with different values of CACHE_RATE, such as 0, 0.5, and 1.0, to investigate the effects of varying cache rates on the predict endpoint application's performance. By analyzing the results of these tests, we can gain insights into the system's behavior under different load conditions and cache rates, ultimately informing optimization strategies for the Kubernetes deployment.]
 
-### Finding 1
+### Cache Rate 0.0
 
-[Some descriptive text]
+[Some descriptive text]![cache-rate0.0_loadjs](../../Cache_0.0_loadjs_report.png)
+  
 
 ### Finding 2
 
@@ -32,4 +47,4 @@
 
 ## Conclusion
 
-[Some descriptive text]
+[In conclusion, this study seeks to provide valuable insights into the performance of predict endpoint applications deployed on Kubernetes under varying cache rates and load conditions. By conducting a thorough analysis of service workloads, deployment success rates, and Redis cache performance, we hope to offer actionable recommendations for businesses looking to optimize their Kubernetes infrastructure and ensure the highest levels of reliability and performance for their predict endpoint applications.]
