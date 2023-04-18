@@ -1,6 +1,6 @@
-# Lab 5 Findings - [Arun Surendranath]
+# Lab 5 Findings - Arun Surendranath
 
-- [Lab 5 Findings - \[YOUR NAME\]](#lab-5-findings---arun-surendranath)
+- [Lab 5 Findings - \[Arun Surendranath\]](#lab-5-findings---arun-surendranath)
   - [Introduction](#introduction)
   - [Methods](#findings)
     - [Cache Rate 0.0](#finding-1)
