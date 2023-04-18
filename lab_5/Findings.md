@@ -42,6 +42,7 @@ To execute the load test, the k6 script can be run with different values of CACH
 ### Cache Rate 0.0
 
 ![cache-rate0.0_loadjs](images/cache_0.0/Cache_0.0_loadjs_report.png)
+  Figure.1-Cache rate 0 complete loadjs report
 With a cache rate set to 0, the overall load test results show higher losses, as only 97% of the checks are successful. The average duration for the requests is around 83ms, but some requests experience higher latency, going up to 700ms. These higher latency requests may occur during runs without cache, which could lead to increased latency from the predict endpoint.
 
 ![](images/cache_0.0/cache_0.0_service_workload.png)
@@ -51,6 +52,7 @@ The service workload summary indicates a 100% success rate for incoming requests
 The summary of the client workload with a cache rate of 0.0 reveals that the majority of requests result in a 200 status code, indicating successful processing. Additionally, there is a 100% success rate for incoming requests.
 
 ![](images/cache_0.0/cache_0.0_redis_bytesoverall.png)
+
 With a cache rate of 0.0, the client workload summary demonstrates that most requests successfully return a 200 status code. Furthermore, there is a 100% success rate for all incoming requests.
 
 
