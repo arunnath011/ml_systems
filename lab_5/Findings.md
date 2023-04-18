@@ -25,17 +25,17 @@ This analysis will enable us to make informed decisions on optimizing the cluste
 we present the methodology used for load testing a predict endpoint application deployed on a Kubernetes cluster, focusing on the impact of varying cache rates. Our aim is to assess the system's performance, response times, and overall success rate under different load conditions and cache rates, set at 0, 0.5, and 1.0.
 To achieve this, we have employed the k6 load testing tool, which provides an efficient way to simulate user traffic and analyze the system's behavior under various conditions. The k6 script provided above outlines the entire load testing process, which can be broken down into the following key components:
 
-1.)Options: The options object defines the load testing stages and thresholds. In this case, we simulate a ramp-up of traffic from 1 to 100 users over 1 minute, maintain 100 users for 5 minutes, and then ramp down to 0 users within 5 seconds. The threshold is set such that 99% of requests must complete within 500 ms.
+1.) Options: The options object defines the load testing stages and thresholds. In this case, we simulate a ramp-up of traffic from 1 to 100 users over 1 minute, maintain 100 users for 5 minutes, and then ramp down to 0 users within 5 seconds. The threshold is set such that 99% of requests must complete within 500 ms.
 
-2.)Features and Fixed Data: The features array contains the feature names for the predict endpoint, while the fixed array holds a predetermined set of values for each feature. These arrays are used to generate input data for the load test, based on the specified cache rate.
+2.) Features and Fixed Data: The features array contains the feature names for the predict endpoint, while the fixed array holds a predetermined set of values for each feature. These arrays are used to generate input data for the load test, based on the specified cache rate.
 
-3.)Random Integer and Data Generator Functions: The randInt function generates a random integer within a given range, while the generator function creates input data for the predict endpoint based on the specified cache rate. If a random number is greater than the cache rate, the function generates random values for each feature; otherwise, it uses the fixed values.
+3.) Random Integer and Data Generator Functions: The randInt function generates a random integer within a given range, while the generator function creates input data for the predict endpoint based on the specified cache rate. If a random number is greater than the cache rate, the function generates random values for each feature; otherwise, it uses the fixed values.
 
-4.)Namespace and Base URL: The NAMESPACE and BASE_URL constants define the predict endpoint's URL, which is used to send requests during the load test.
+4.) Namespace and Base URL: The NAMESPACE and BASE_URL constants define the predict endpoint's URL, which is used to send requests during the load test.
 
-5.)Cache Rate: The CACHE_RATE constant defines the cache rate for the load test. It can be changed to 0, 0.5, or 1.0 to study the impact of different cache rates on the system's performance.
+5.) Cache Rate: The CACHE_RATE constant defines the cache rate for the load test. It can be changed to 0, 0.5, or 1.0 to study the impact of different cache rates on the system's performance.
 
-6.)Load Test Function: The default function represents the main load testing logic. It sends an HTTP GET request to the /health endpoint, checking whether the status is 200 and the response is "healthy". Next, it generates input data based on the specified cache rate and sends an HTTP POST request to the /predict endpoint. It checks whether the response status is 200 and whether the prediction is a valid number.
+6.) Load Test Function: The default function represents the main load testing logic. It sends an HTTP GET request to the /health endpoint, checking whether the status is 200 and the response is "healthy". Next, it generates input data based on the specified cache rate and sends an HTTP POST request to the /predict endpoint. It checks whether the response status is 200 and whether the prediction is a valid number.
 
 To execute the load test, the k6 script can be run with different values of CACHE_RATE, such as 0, 0.5, and 1.0, to investigate the effects of varying cache rates on the predict endpoint application's performance. By analyzing the results of these tests, we can gain insights into the system's behavior under different load conditions and cache rates, ultimately informing optimization strategies for the Kubernetes deployment.
 
