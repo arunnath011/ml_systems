@@ -41,18 +41,49 @@ To execute the load test, the k6 script can be run with different values of CACH
 
 ### Cache Rate 0.0
 
-[Some descriptive text]![cache-rate0.0_loadjs](images/cache_0.0/Cache_0.0_loadjs_report.png)
-  
+![cache-rate0.0_loadjs](images/cache_0.0/Cache_0.0_loadjs_report.png)
+With a cache rate set to 0, the overall load test results show higher losses, as only 97% of the checks are successful. The average duration for the requests is around 83ms, but some requests experience higher latency, going up to 700ms. These higher latency requests may occur during runs without cache, which could lead to increased latency from the predict endpoint.
 
-### Finding 2
+![](images/cache_0.0/cache_0.0_service_workload.png)
+The service workload summary indicates a 100% success rate for incoming requests. It is evident that the overall load on the system has increased with the influx of incoming requests. The majority of responses for these operations had a 200 status code, indicating successful processing.
 
-[Some descriptive text]
+![](images/cache_0.0/cache_0.0_client_workload.png)
+The summary of the client workload with a cache rate of 0.0 reveals that the majority of requests result in a 200 status code, indicating successful processing. Additionally, there is a 100% success rate for incoming requests.
 
-### Finding N
+![](images/cache_0.0/cache_0.0_redis_bytesoverall.png)
+With a cache rate of 0.0, the client workload summary demonstrates that most requests successfully return a 200 status code. Furthermore, there is a 100% success rate for all incoming requests.
 
-[Some descriptive text]
+
+### Cache Rate 0.5
+
+![](images/cache_0.5/cache_0.5_loadjs.png)
+When the cache rate is increased from 0 to 0.5, there is a noticeable improvement in the overall latency of the requests, as well as an increase in the success rate from the load test results. This outcome aligns with the primary purpose of caching, which is to store 50% of the requests to enhance overall latency and performance.
+
+![](images/cache_0.5/cache_0.5_srv_client_load.png)
+The summary reveals that as the load increases, there is a noticeable rise in the latency of requests. Despite this, all operations maintain a 100% success rate.
+
+![](images/cache_0.5/cache_0.5_redis_srv_load.png)
+The above figure summarizes the Redis service load resulting from the caching rate. As the load testing tool ramps up the traffic, we can observe an increase in the overall traffic.
+### Cache Rate 1.0
+
+![](images/cache_1.0/cache_1.0_loadjs_overall.png)
+The figure summarizes the load test results for a cache rate of 1.0, showing a significant decrease in latency and a 100% success rate. These findings suggest that using a higher cache rate is highly beneficial for performance.
+![](images/cache_1.0/cache_1.0_service_workload.png)
+With higher loads at the 99% level, the latency increases, but it still shows an improvement compared to a cache rate of 0.0.
+
+![](images/cache_1.0/cache_1.0_redis_svcload.png)
+n the case of the Redis service load, we observe a consistent rate of requests received and sent, which aligns with expectations since a much higher cache rate has been set.
+
 
 ## Conclusion
 
 In conclusion, this study seeks to provide valuable insights into the performance of predict endpoint applications deployed on Kubernetes under varying cache rates and load conditions. By conducting a thorough analysis of service workloads, deployment success rates, 
 and Redis cache performance, we hope to offer actionable recommendations for businesses looking to optimize their Kubernetes infrastructure and ensure the highest levels of reliability and performance for their predict endpoint applications.
+In conclusion, the load tests performed with varying cache rates have provided valuable insights into the system's performance. When the cache rate was increased from 0.0 to 0.5, there was a noticeable improvement in the overall latency of the requests and an increase in the success rate from the load test results. This demonstrated the positive impact of caching on performance.
+Furthermore, when the cache rate was set to 1.0, the results indicated a significant decrease in latency and a 100% success rate. This finding suggests that using a higher cache rate is highly advantageous for enhancing system performance.
+However, it is important to note that with higher loads at the 99% level, latency did increase, albeit to a lesser extent compared to a cache rate of 0.0. In the case of the Redis service load, a consistent rate of requests received and sent was observed, which was expected due to the higher cache rate.
+Overall, the load tests have demonstrated the benefits of implementing caching strategies to improve system performance and reduce latency under various load conditions. It is recommended to fine-tune the cache rate based on the specific use case and requirements to achieve optimal performance.
+
+
+
+

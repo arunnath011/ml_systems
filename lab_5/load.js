@@ -45,7 +45,7 @@ const generator = (cacheRate) => {
 
 const NAMESPACE = 'arunnath011'
 const BASE_URL = `https://${NAMESPACE}.mids255.com`;
-const CACHE_RATE = 1.0
+const CACHE_RATE = 0.5
 
 export default () => {
     const healthRes = http.get(`${BASE_URL}/health`)
