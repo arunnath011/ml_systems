@@ -46,10 +46,8 @@ kubectl port-forward -n prometheus svc/grafana 3000:3000
 
 Step-6
 
-in lab_5 dir, run the command 'k6 run load.js' (need to install k6 before doing this step)
+In lab_5 dir, run the command 'k6 run load.js' (need to install k6 before doing this step)
 
-things left to do 
-1.) run k6 with different cache rate 0,0.5 and 1
-2.) upload all the findings into findings.md
-3.) push the final submissions
-4.) take down lab4 from aks 
+Step-7
+
+Record all the results from the load test and upload it into findings.md file
