@@ -7,8 +7,8 @@ spec:
   template:
     spec:
       containers:
-        - name: lab4
-          image: arunnath011/lab4:latest
+        - name: project
+          image: w255mids.azurecr.io/arunnath011/lab4:[TAG]
           resources:
             requests:
               cpu: 200m
@@ -16,7 +16,7 @@ spec:
             limits:
               cpu: 500m
               memory: 500Mi
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
           readinessProbe:

@@ -2,21 +2,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: lab4
+  name: project
   labels:
-    app: lab4
+    app: project
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: lab4
+      app: project
   template:
     metadata:
       labels:
-        app: lab4
+        app: project
     spec:
       containers:
-        - name: lab4
+        - name: project
           image: arunnath011/lab4:latest
           resources:
             requests:
@@ -65,12 +65,12 @@ from DNS'; sleep 2; done",
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: lab4
+  name: project
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: lab4
+    name: project
   minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 50

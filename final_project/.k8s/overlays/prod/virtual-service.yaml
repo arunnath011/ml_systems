@@ -2,7 +2,7 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: lab4
+  name: project
 spec:
   hosts:
     - arunnath011.mids255.com
@@ -20,6 +20,6 @@ spec:
             prefix: /openapi.json
       route:
         - destination:
-            host: lab4
+            host: project
             port:
               number: 8000

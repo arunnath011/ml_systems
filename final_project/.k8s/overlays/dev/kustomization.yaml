@@ -3,6 +3,6 @@ namespace: arunnath011
 bases:
   - ../../bases
 patches:
-  - path: patch-deployment-lab4.yaml
+  - path: patch-deployment-project.yaml
     target:
       kind: Deployment
