@@ -8,14 +8,14 @@ spec:
     spec:
       containers:
         - name: project
-          image: w255mids.azurecr.io/arunnath011/lab4:[TAG]
+          image: w255mids.azurecr.io/arunnath011/project:[TAG]
           resources:
             requests:
-              cpu: 200m
-              memory: 500Mi
+              cpu: 2Gi
+              memory: 2Gi
             limits:
-              cpu: 500m
-              memory: 500Mi
+              cpu: 2Gim
+              memory: 2Gi
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
