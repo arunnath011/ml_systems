@@ -3,9 +3,9 @@
 - [Final Project - \[Arun Surendranath\]](#Project Findings---arun-surendranath)
   - [Introduction](#introduction)
   - [Methods](#findings)
-    - [Cache Rate 0.0](#finding-1)
-    - [Cache Rate 0.5](#finding-2)
-    - [Cache Rate 1.0](#finding-n)
+    - [Cache Rate 0.95](#finding-1)
+    - [Cache Rate 0.95](#finding-2)
+    - [Cache Rate 0.95](#finding-n)
   - [Conclusion](#conclusion)
 
 ---
