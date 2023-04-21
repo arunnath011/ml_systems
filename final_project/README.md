@@ -1,4 +1,4 @@
-##Order of this build 
+Order of this build 
 
 1.) make the main.py and test it out locally
 
@@ -35,7 +35,11 @@ curl -X 'POST' 'https://arunnath011.mids255.com/predict' -L  -H 'accept: applica
 
 
 Key Learnings:
+
 1.) Making sure the distilbert model is locally installed so it is easier to incorporate into the model and proper functioning
+
 2.) My docker build for AKS deployment kept failing due to memory issues, had to clean out the docker images in the system
+
 3.) Using the run.sh to build the image and pushing to the acr repo is highly recommened as it helps with automated patching for any changes made to the main code base
+
 4.) in deployments need to increase the cpu and the memory size to cpu to 800Mi and memory to 2Gi, this is required as the distilbert and pytorch makes the image size considerably bigger and the model requires higher computational resources to predict the endpoint.
